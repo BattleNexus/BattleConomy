@@ -1,0 +1,12 @@
+name: BattleConomy
+main: net.battlenexus.bukkit.economy.BattleConomy
+version: 1.0.0
+author: Lavoaster
+depend: [Vault]
+commands:
+   be:
+      aliases:
+        - money
+        - m
+      description: BattleEconomy Command.
+      usage: /<command> [option] [..extra]
