@@ -9,4 +9,4 @@ commands:
         - money
         - m
       description: BattleEconomy Command.
-      usage: /<command> [option] [..extra]
+      usage: /<command> [option] [arguments]
