@@ -6,7 +6,7 @@ public class BattleConomy extends JavaPlugin {
 	@Override
 	public void onEnable()
 	{
-		getCommand("be").setExecutor(new BattleCommands(this));	
+		getCommand("be").setExecutor(new BattleCommands());	
 		
 		getLogger().info("BattleConomy loaded successfully");
 	}
