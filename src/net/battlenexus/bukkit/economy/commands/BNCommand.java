@@ -1,9 +1,9 @@
 package net.battlenexus.bukkit.economy.commands;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 public abstract class BNCommand {
 	
-	public abstract void execute(Player p);
+	public abstract void execute(CommandSender p, String[] args);
 
 }
