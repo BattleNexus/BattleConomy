@@ -1,5 +1,7 @@
 package net.battlenexus.bukkit.economy;
 
+import net.battlenexus.bukkit.economy.commands.BNCommand;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,7 +9,9 @@ import org.bukkit.entity.Player;
 
 public class BattleCommands implements CommandExecutor  {
 	
-	
+	BNCommand[] commands = new BNCommand[] {
+			
+	};
 	public BattleCommands(BattleConomy battleconomy)
 	{
 		//I'm sure this will come in use at sometime.
