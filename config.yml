@@ -5,6 +5,8 @@ mysql:
     database: database
     username: username
     password: password
+    prefix: econ_
+    auto-create: true
 currency:
     prefix: $
     singular: Dollar

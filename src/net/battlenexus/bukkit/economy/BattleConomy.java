@@ -29,7 +29,13 @@ public class BattleConomy extends JavaPlugin {
 		getConfig();
 		if (sql.connect(getConfig().getString("mysql.host"), getConfig().getString("mysql.port"), getConfig().getString("mysql.database"), getConfig().getString("mysql.username"), getConfig().getString("mysql.password"))){
 			connected = true;
+			sql.prefix = getConfig().getString("mysql.prefix");
 			Api.sql = sql;
+			if(getConfig().getBoolean("mysql.auto-create")){
+				setupMysql();
+				getConfig().set("mysql.auto-create", false);
+			    saveConfig();
+			}
 			getLogger().info("Connected to mysql!");
 		}else{
 			getLogger().info("Couldn't connect to mysql");
@@ -55,6 +61,25 @@ public class BattleConomy extends JavaPlugin {
 		getCommand("be").setExecutor(new BattleCommands(sql));
 
 		getLogger().info("BattleConomy loaded successfully");
+	}
+
+	private void setupMysql() {
+		getLogger().info("Creating mysql tables...");
+		sql.build("CREATE TABLE IF NOT EXISTS "+sql.prefix+"balances ("
+				 +"  economy_key varchar(20) NOT NULL,"
+				 +"  user_id int(11) NOT NULL,"
+				 +"  balance decimal(19,2) NOT NULL,"
+				 +"  PRIMARY KEY (economy_key,user_id)"
+				 +") ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+		sql.executeUpdate();
+		sql.build("CREATE TABLE IF NOT EXISTS "+sql.prefix+"players ("
+				 +"  id int(11) NOT NULL AUTO_INCREMENT,"
+				 +"  username varchar(20) NOT NULL,"
+				 +"  PRIMARY KEY (id),"
+				 +"  UNIQUE KEY username (username)"
+				 +") ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+		sql.executeUpdate();
+		getLogger().info("Mysql tables created successfully...");
 	}
 
 	private void setupVault(){

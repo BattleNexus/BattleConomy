@@ -11,5 +11,7 @@ public interface SqlInterface {
 	public ResultSet executeRawQuery(String sql);
 	public int executeUpdate();
 	public int executeRawUpdate(String sql);
+	public ResultSet executeRawPreparedQuery(String sql, String[] parameters);
+	public int executeRawPreparedUpdate(String sql, String[] parameters);
 	
 }

@@ -31,9 +31,7 @@ public class Economy_BattleConomy implements Economy {
             Plugin ec = plugin.getServer().getPluginManager().getPlugin("BattleConomy");
             if (ec != null && ec.isEnabled()) {
                 economy = (BattleConomy) ec;
-                log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), name));
-            }else{
-            	log.info(String.format("[%s][Economy] %s unable to hook.", plugin.getDescription().getName(), name));
+                log.info(String.format("[%s] Vault Support enabled.", plugin.getDescription().getName(), name));
             }
         }
     }
@@ -51,9 +49,7 @@ public class Economy_BattleConomy implements Economy {
                 Plugin ec = plugin.getServer().getPluginManager().getPlugin("BattleConomy");
                 if (ec != null && ec.isEnabled()) {
                     economy.economy = (BattleConomy) ec;
-                    log.info(String.format("[%s][Economy] %s hooked.", plugin.getDescription().getName(), economy.name));
-                }else{
-                	log.info(String.format("[%s][Economy] %s unable to hook.", plugin.getDescription().getName(), economy.name));
+                    log.info(String.format("[%s] Vault Support enabled.", plugin.getDescription().getName(), economy.name));
                 }
             }
         }

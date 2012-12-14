@@ -26,13 +26,49 @@ public class MySQL extends SqlClass {
 			// If it had problems, it was already disconnected
 		}
 	}
+	
+	@Override
+	public ResultSet executeRawPreparedQuery(String sql, String[] parameters) {
+		PreparedStatement preparedStatement;
+		ResultSet results = null;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+			int i = 1;
+			for(String parameter : parameters) {
+				preparedStatement.setString(i, parameter);
+				i++;
+			}
+			results = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	@Override
+	public int executeRawPreparedUpdate(String sql, String[] parameters) {
+		PreparedStatement preparedStatement;
+		int results = 0;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+			int i = 1;
+			for(String parameter : parameters) {
+				preparedStatement.setString(i, parameter);
+				i++;
+			}
+			results = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
 
 	@Override
 	public ResultSet executeRawQuery(String sql) {
 		PreparedStatement preparedStatement;
 		ResultSet results = null;
 		try {
-			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement = conn.prepareStatement(sql);			
 			results = preparedStatement.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

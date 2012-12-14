@@ -14,9 +14,16 @@ public class Balance extends BNCommand {
 			return;
 		}
 						
-		String username = args.length > 0 ? args[0] : sender.getName();
-
-		String balance = Api.formatMoney(Api.getBalance(username));
+		String username = sender.getName();
+		String world = null;
+		if(args.length > 0) {
+			world = args[0];
+		}else if(args.length > 1) {
+			username = args[0];
+			world = args[1];
+		}
+		if(world != null) world = Api.getEconKey(world);
+		String balance = Api.formatMoney(world == null ? Api.getBalance(username) : Api.getBalance(username, world));
 
 		if (!sender.getName().equalsIgnoreCase(username))
 			sender.sendMessage(username + " has: " + balance);

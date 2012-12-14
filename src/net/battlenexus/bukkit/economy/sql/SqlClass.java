@@ -1,6 +1,7 @@
 package net.battlenexus.bukkit.economy.sql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,13 +11,27 @@ public abstract class SqlClass implements SqlInterface {
 
 	public String prefix = "";
 
-	public String current_query = "";
+	protected String current_query = "";
+	
+	public PreparedStatement prepare;
 
 	public ResultSet results;
 	
 
 	public void build(String sql) {
 		current_query += sql;
+	}
+	
+	public ResultSet executePreparedQuery(String[] parameters) {
+		ResultSet query = executeRawPreparedQuery(current_query, parameters);
+		current_query = "";
+		return query;
+	}
+	
+	public int executePreparedUpdate(String[] parameters) {
+		int query = executeRawPreparedUpdate(current_query, parameters);
+		current_query = "";
+		return query;
 	}
 
 	public ResultSet executeQuery() {

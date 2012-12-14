@@ -23,9 +23,10 @@ public class Api {
 	
 	public static boolean accountExists(String username){
 		sql.build("SELECT COUNT(id) AS num FROM "
-										+sql.prefix+"players WHERE username='"
-										+username.toLowerCase()+"'");
-		ResultSet results = sql.executeQuery();
+										+sql.prefix+"players WHERE username=?");
+		String[] params = {username.toLowerCase()};
+		
+		ResultSet results = sql.executePreparedQuery(params);
 		
 		try {
 			while(results.next())
@@ -42,10 +43,9 @@ public class Api {
 	
 	public static boolean balanceExists(String username, String econKey){
 		sql.build("SELECT COUNT(id) AS num FROM "
-										+sql.prefix+"balances WHERE username='"
-										+username.toLowerCase()+"' AND economy_key='"
-										+econKey.toLowerCase()+"'");
-		ResultSet results = sql.executeQuery();
+										+sql.prefix+"balances WHERE username=? AND economy_key=?");
+		String[] params = {username.toLowerCase(), econKey};
+		ResultSet results = sql.executePreparedQuery(params);
 		
 		try {
 			while(results.next()) {
@@ -66,7 +66,7 @@ public class Api {
 	public static String getEconKey(String world) {
 		for(String economy : economies.keySet()) {
 			for(String worlds : economies.get(economy)) {
-				if(worlds.equals(world))
+				if(worlds.equalsIgnoreCase(world))
 					return economy;
 			}
 		}
@@ -74,15 +74,17 @@ public class Api {
 	}
 	
 	public static boolean createAccount(String username) {
-		sql.build("INSERT IGNORE INTO "+sql.prefix+"players SET username='"+username.toLowerCase()+"'");
-		if(sql.executeUpdate() > 0)
+		sql.build("INSERT IGNORE INTO "+sql.prefix+"players SET username=?");
+		String[] params = {username.toLowerCase()};
+		if(sql.executePreparedUpdate(params) > 0)
 			return true;
 		return false;
 	}
 	
 	public static boolean createBalance(String username, String econKey) {
-		sql.build("INSERT IGNORE INTO "+sql.prefix+"balances SELECT '"+econKey.toLowerCase()+"',id,"+config.getString("economies."+econKey+".starting-balance")+" FROM "+sql.prefix+"players WHERE username='"+username.toLowerCase()+"'");
-		if(sql.executeUpdate() > 0)
+		sql.build("INSERT IGNORE INTO "+sql.prefix+"balances SELECT ?,id,? FROM "+sql.prefix+"players WHERE username=?");
+		String[] params = {econKey.toLowerCase(),config.getString("economies."+econKey+".starting-balance"),username.toLowerCase()};
+		if(sql.executePreparedUpdate(params) > 0)
 			return true;
 		return false;
 	}
@@ -131,9 +133,9 @@ public class Api {
 		if(econKey == null)
 			return false;
 		sql.build("UPDATE " + sql.prefix + "balances b INNER JOIN "
-				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance=b.balance+"+amount+" WHERE p.username='"
-				+ username.toLowerCase() + "' AND b.economy_key='"+econKey+"'");
-		if(sql.executeUpdate() > 0)
+				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance=b.balance+? WHERE p.username=? AND b.economy_key=?");
+		String[] params = {Double.toString(amount), username.toLowerCase(), econKey};
+		if(sql.executePreparedUpdate(params) > 0)
 			return true;
 		return false;		
 	}
@@ -146,9 +148,9 @@ public class Api {
 		if(econKey == null)
 			return false;
 		sql.build("UPDATE " + sql.prefix + "balances b INNER JOIN "
-				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance=b.balance-"+amount+" WHERE p.username='"
-				+ username.toLowerCase() + "' AND b.economy_key='"+econKey+"'");
-		if(sql.executeUpdate() > 0)
+				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance=b.balance-? WHERE p.username=? AND b.economy_key=?");
+		String[] params = {Double.toString(amount), username.toLowerCase(), econKey};
+		if(sql.executePreparedUpdate(params) > 0)
 			return true;	
 		return false;		
 	}
@@ -161,9 +163,9 @@ public class Api {
 		if(econKey == null)
 			return false;
 		sql.build("UPDATE " + sql.prefix + "balances b INNER JOIN "
-				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance="+amount+" WHERE p.username='"
-				+ username.toLowerCase() + "' AND b.economy_key='"+econKey+"'");
-		if(sql.executeUpdate() > 0)
+				+ sql.prefix + "players p ON p.id=b.user_id SET b.balance=? WHERE p.username=? AND b.economy_key=?");
+		String[] params = {Double.toString(amount), username.toLowerCase(), econKey};
+		if(sql.executePreparedUpdate(params) > 0)
 			return true;	
 		return false;		
 	}

@@ -13,6 +13,9 @@ public class Send extends BNCommand {
 			sender.sendMessage("This command can only be used by players");
 			return;
 		}
+		if(args.length < 2) {
+			sender.sendMessage("/be send <username> <amount> [world]");
+		}
 		
 		String username = args[0];
 		double amount = Double.parseDouble(args[1]);		

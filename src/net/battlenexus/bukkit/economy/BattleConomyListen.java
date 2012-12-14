@@ -15,7 +15,8 @@ public class BattleConomyListen implements Listener {
 		Api.createAccount(event.getPlayer().getName());
 		String econKey = Api.getEconKey(event.getPlayer().getWorld().getName());
 		if(econKey != null)
-			Api.createBalance(event.getPlayer().getName(), econKey);	}
+			Api.createBalance(event.getPlayer().getName(), econKey);	
+	}
 	
 	@EventHandler
 	public void playerWorldChange(PlayerChangedWorldEvent event) {
