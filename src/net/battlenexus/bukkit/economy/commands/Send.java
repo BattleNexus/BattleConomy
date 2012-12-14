@@ -15,9 +15,16 @@ public class Send extends BNCommand {
 		}
 		if(args.length < 2) {
 			sender.sendMessage("/be send <username> <amount> [world]");
+			return;
 		}
 		
 		String username = args[0];
+		
+		if(!Api.accountExists(args[0])){
+			sender.sendMessage("The account '"+args[0]+"' doesn't exist");
+			return;
+		}
+		
 		double amount = Double.parseDouble(args[1]);		
 
 		if(Api.hasEnough(sender.getName(), amount)) {					

@@ -19,6 +19,8 @@ public class Add extends BNCommand {
 			}else{
 				sender.sendMessage("This world doesn't have an economy");
 			}
+		}else{
+			sender.sendMessage("The account '"+args[0]+"' doesn't exist");
 		}
 	}
 
