@@ -8,11 +8,14 @@ public class Set extends BNCommand {
 
 	@Override
 	public void execute(CommandSender sender, String[] args) {
+		if(!sender.hasPermission("be.admin.set") || !sender.isOp()){
+			sender.sendMessage("You do not have permission to run this command");
+			return;
+		}
 		if(args.length < 2){
 			sender.sendMessage("/be set <username> <amount> [world]");
 			return;
 		}
-		
 		if(Api.accountExists(args[0])) {
 			sender.sendMessage("The account '"+args[0]+"' doesn't exist");
 			return;
