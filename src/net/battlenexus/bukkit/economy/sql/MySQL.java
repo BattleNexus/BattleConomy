@@ -13,7 +13,6 @@ public class MySQL extends SqlClass {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"+ port + "/" + database, username, password);
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			return false;
 		}
 		return true;
@@ -29,12 +28,25 @@ public class MySQL extends SqlClass {
 	}
 
 	@Override
-	public ResultSet query(String sql) {
+	public ResultSet executeRawQuery(String sql) {
 		PreparedStatement preparedStatement;
 		ResultSet results = null;
 		try {
 			preparedStatement = conn.prepareStatement(sql);
 			results = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	@Override
+	public int executeRawUpdate(String sql) {
+		PreparedStatement preparedStatement;
+		int results = 0;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+			results = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

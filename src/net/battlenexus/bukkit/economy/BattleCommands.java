@@ -33,14 +33,6 @@ public class BattleCommands implements CommandExecutor {
 			return onCommand(sender, cmd, label, newargs);
 		}
 
-		sender.sendMessage("--------- BEGIN DEBUG INFO ---------");
-		sender.sendMessage("Label Used");
-		sender.sendMessage(label);
-		sender.sendMessage("Arguments:");
-		sender.sendMessage(args);
-		sender.sendMessage("---------  END DEBUG INFO  ---------");
-		sender.sendMessage("");
-
 		try {
 			Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.commands."+WordUtils.capitalizeFully(args[0]));
 			Class<? extends BNCommand> runClass = class_.asSubclass(BNCommand.class);

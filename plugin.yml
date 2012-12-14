@@ -1,4 +1,5 @@
 name: BattleConomy
+load: startup
 main: net.battlenexus.bukkit.economy.BattleConomy
 version: 1.0.0
 author: Lavoaster

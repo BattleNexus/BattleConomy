@@ -13,13 +13,20 @@ public abstract class SqlClass implements SqlInterface {
 	public String current_query = "";
 
 	public ResultSet results;
+	
 
 	public void build(String sql) {
 		current_query += sql;
 	}
 
-	public ResultSet execute() {
-		ResultSet query = query(current_query);
+	public ResultSet executeQuery() {
+		ResultSet query = executeRawQuery(current_query);
+		current_query = "";
+		return query;
+	}
+	
+	public int executeUpdate() {
+		int query = executeRawUpdate(current_query);
 		current_query = "";
 		return query;
 	}
