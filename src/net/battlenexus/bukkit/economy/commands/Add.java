@@ -8,12 +8,12 @@ public class Add extends BNCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("be.admin.add") || !sender.isOp()) {
+        if (!sender.hasPermission("bc.admin.add") || !sender.isOp()) {
             sender.sendMessage("You do not have permission to run this command");
             return;
         }
         if (args.length < 0) {
-            sender.sendMessage("/be add <username> <amount> [world]");
+            sender.sendMessage("/bc add <username> <amount> [world]");
         }
 
         if (!Api.accountExists(args[0])) {

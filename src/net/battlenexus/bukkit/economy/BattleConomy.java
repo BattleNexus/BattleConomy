@@ -81,7 +81,7 @@ public class BattleConomy extends JavaPlugin {
 
         setupVault();
         new BattleConomyListen(this);
-        getCommand("be").setExecutor(new BattleCommands(sql));
+        getCommand("bc").setExecutor(new BattleCommands(sql));
 
         getLogger().info("BattleConomy loaded successfully");
     }

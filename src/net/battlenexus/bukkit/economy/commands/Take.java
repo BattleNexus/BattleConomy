@@ -8,12 +8,12 @@ public class Take extends BNCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!sender.hasPermission("be.admin.take") || !sender.isOp()) {
+        if (!sender.hasPermission("bc.admin.take") || !sender.isOp()) {
             sender.sendMessage("You do not have permission to run this command");
             return;
         }
         if (args.length < 0) {
-            sender.sendMessage("/be take <username> <amount> [world]");
+            sender.sendMessage("/bc take <username> <amount> [world]");
         }
 
         if (!Api.accountExists(args[0])) {

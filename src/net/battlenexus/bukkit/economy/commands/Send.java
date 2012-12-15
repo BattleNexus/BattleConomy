@@ -14,7 +14,7 @@ public class Send extends BNCommand {
             return;
         }
         if (args.length < 2) {
-            sender.sendMessage("/be send <username> <amount> [world]");
+            sender.sendMessage("/bc send <username> <amount> [world]");
             return;
         }
 

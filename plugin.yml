@@ -1,13 +1,19 @@
 name: BattleConomy
 load: startup
 main: net.battlenexus.bukkit.economy.BattleConomy
-version: 0.1.0
+version: 1.0.0-beta1
 author: Lavoaster
-depend: [Vault]
+softdepend: [Vault]
+loadbefore: [Essentials]
 commands:
-   be:
+   bc:
       aliases:
         - money
         - m
       description: BattleEconomy Command.
       usage: /<command> [option] [arguments]
+   bc balance:
+      aliases:
+        - balance
+      description: View your balance.
+      usage: /<command> [economykey] [player]
