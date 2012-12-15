@@ -13,7 +13,7 @@ currency:
     plural: Dollars
 economies:
     main:
-        starting-balance: 0;
+        starting-balance: 0
         worlds:
             - world
             - world_nether
