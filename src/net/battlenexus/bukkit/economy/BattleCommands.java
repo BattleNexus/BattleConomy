@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.sql.SQLException;
 
 import net.battlenexus.bukkit.economy.commands.BNCommand;
-import net.battlenexus.bukkit.economy.sql.MySQL;
+import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.command.Command;
@@ -14,9 +14,9 @@ import org.bukkit.entity.Player;
 
 public class BattleCommands implements CommandExecutor {
 
-	MySQL sql;
+	SqlClass sql;
 
-	public BattleCommands(MySQL sql) {
+	public BattleCommands(SqlClass sql) {
 		this.sql = sql;
 	}
 
