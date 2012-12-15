@@ -18,7 +18,7 @@ public class Api {
 	public static String plural = "";
 	public static FileConfiguration config;
 	protected static DecimalFormat format = new DecimalFormat("#,###.00");
-	public static MySQL sql;
+	public static Object sql;
 	public static HashMap<String, List<String>> economies = new HashMap<String, List<String>>();
 	
 	public static boolean accountExists(String username){
@@ -60,10 +60,10 @@ public class Api {
 	}
 
 	public static String getPlayerWorldEconKey(String username){
-		return getEconKey(Bukkit.getServer().getPlayer(username).getWorld().getName());
+		return getEcononmyKeyByWorld(Bukkit.getServer().getPlayer(username).getWorld().getName());
 	}
 	
-	public static String getEconKey(String world) {
+	public static String getEcononmyKeyByWorld(String world) {
 		for(String economy : economies.keySet()) {
 			for(String worlds : economies.get(economy)) {
 				if(worlds.equalsIgnoreCase(world))
@@ -96,19 +96,19 @@ public class Api {
 	public static double getBalance(String username, String econKey) {
 		if(econKey == null)
 			return 0;
-		String balance = null;
+		double balance = 0;
 		sql.build("SELECT * FROM " + sql.prefix + "balances b INNER JOIN "
 				+ sql.prefix + "players p ON p.id=b.user_id WHERE p.username='"
 				+ username.toLowerCase() + "' AND b.economy_key='"+econKey+"'");
 		ResultSet results = sql.executeQuery();
 		try {
 			while (results.next()) {
-				balance = results.getString("balance");
+				balance = results.getDouble("balance");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return Double.parseDouble(balance);		
+		return balance;		
 	}
 	
 	public static boolean hasEnough(String username, double amount){
@@ -172,6 +172,10 @@ public class Api {
 	
 	public static String formatMoney(Double amount)
 	{
-		return prefix+format.format(amount);
+		if(amount != 0.0){
+			return prefix+format.format(amount);	
+		}else{
+			return prefix+"0.00";
+		}
 	}
 }
