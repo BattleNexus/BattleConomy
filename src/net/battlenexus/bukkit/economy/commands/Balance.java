@@ -19,7 +19,7 @@ public class Balance extends BNCommand {
 
         if (args.length > 0) {
             world = args[0];
-            if (!Api.balanceExists(username, Api.getEcononmyKeyByWorld(world))) {
+            if (!Api.balanceExists(username, Api.getEconomyKeyByWorld(world))) {
                 sender.sendMessage("You do not have a balance in this world, visit it to create one!");
                 return;
             }
@@ -34,7 +34,7 @@ public class Balance extends BNCommand {
         }
 
         if (world != null)
-            world = Api.getEcononmyKeyByWorld(world);
+            world = Api.getEconomyKeyByWorld(world);
         String balance = Api.formatMoney(world == null ? Api
                 .getBalance(username) : Api.getBalance(username, world));
 

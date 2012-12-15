@@ -24,7 +24,7 @@ public class Add extends BNCommand {
         double amount = Double.parseDouble(args[1]);
 
         if (args.length == 2 ? Api.addMoney(args[0], amount) : Api.addMoney(
-                args[0], amount, Api.getEcononmyKeyByWorld(args[2]))) {
+                args[0], amount, Api.getEconomyKeyByWorld(args[2]))) {
             sender.sendMessage("You added " + Api.formatMoney(amount) + " to "
                     + args[0] + "'s account. They now have "
                     + Api.formatMoney(Api.getBalance(args[0])));

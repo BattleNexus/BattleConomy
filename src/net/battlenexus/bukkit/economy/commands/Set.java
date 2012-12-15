@@ -24,7 +24,7 @@ public class Set extends BNCommand {
         double amount = Double.parseDouble(args[1]);
 
         if (args.length == 2 ? Api.setMoney(args[0], amount) : Api.setMoney(
-                args[0], amount, Api.getEcononmyKeyByWorld(args[2]))) {
+                args[0], amount, Api.getEconomyKeyByWorld(args[2]))) {
             sender.sendMessage(args[0] + " balance was set to "
                     + Api.formatMoney(Double.parseDouble(args[1])));
         } else {

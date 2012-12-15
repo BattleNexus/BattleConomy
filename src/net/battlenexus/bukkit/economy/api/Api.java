@@ -58,12 +58,12 @@ public class Api {
         return false;
     }
 
-    public static String getPlayerWorldEconKey(String username) {
-        return getEcononmyKeyByWorld(Bukkit.getServer().getPlayer(username)
+    public static String getEconomyKeyByPlayerWorld(String username) {
+        return getEconomyKeyByWorld(Bukkit.getServer().getPlayer(username)
                 .getWorld().getName());
     }
 
-    public static String getEcononmyKeyByWorld(String world) {
+    public static String getEconomyKeyByWorld(String world) {
         for (String economy : economies.keySet()) {
             for (String worlds : economies.get(economy)) {
                 if (worlds.equalsIgnoreCase(world))
@@ -94,7 +94,7 @@ public class Api {
     }
 
     public static double getBalance(String username) {
-        return getBalance(username, getPlayerWorldEconKey(username));
+        return getBalance(username, getEconomyKeyByPlayerWorld(username));
     }
 
     public static double getBalance(String username, String econKey) {
@@ -117,7 +117,7 @@ public class Api {
     }
 
     public static boolean hasEnough(String username, double amount) {
-        return hasEnough(username, amount, getPlayerWorldEconKey(username));
+        return hasEnough(username, amount, getEconomyKeyByPlayerWorld(username));
     }
 
     public static boolean hasEnough(String username, double amount,
@@ -132,7 +132,7 @@ public class Api {
     }
 
     public static boolean addMoney(String username, double amount) {
-        return addMoney(username, amount, getPlayerWorldEconKey(username));
+        return addMoney(username, amount, getEconomyKeyByPlayerWorld(username));
     }
 
     public static boolean addMoney(String username, double amount,
@@ -152,7 +152,7 @@ public class Api {
     }
 
     public static boolean takeMoney(String username, double amount) {
-        return takeMoney(username, amount, getPlayerWorldEconKey(username));
+        return takeMoney(username, amount, getEconomyKeyByPlayerWorld(username));
     }
 
     public static boolean takeMoney(String username, double amount,
@@ -172,7 +172,7 @@ public class Api {
     }
 
     public static boolean setMoney(String username, double amount) {
-        return setMoney(username, amount, getPlayerWorldEconKey(username));
+        return setMoney(username, amount, getEconomyKeyByPlayerWorld(username));
     }
 
     public static boolean setMoney(String username, double amount,
