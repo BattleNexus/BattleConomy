@@ -1,6 +1,3 @@
-BattleConomy
-============
-
 ![BattleConomy](http://www.battlenexus.net/assets/plugins/battleconomy/BattleConomy.png)
 
 [BattleNexus][1]
