@@ -4,6 +4,7 @@ BattleConomy
 ![BattleConomy](http://www.battlenexus.net/assets/plugins/battleconomy/BattleConomy.png)
 
 [BattleNexus][1]
+
 This plugin is an economy system which In a nutshell will let you create multiple economies for each worlds.
 
 ##Features
