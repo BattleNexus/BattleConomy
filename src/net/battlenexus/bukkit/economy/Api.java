@@ -9,7 +9,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import net.battlenexus.bukkit.economy.sql.MySQL;
+import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 public class Api {
 	
@@ -18,7 +18,7 @@ public class Api {
 	public static String plural = "";
 	public static FileConfiguration config;
 	protected static DecimalFormat format = new DecimalFormat("#,###.00");
-	public static MySQL sql;
+	public static SqlClass sql;
 	public static HashMap<String, List<String>> economies = new HashMap<String, List<String>>();
 	
 	public static boolean accountExists(String username){

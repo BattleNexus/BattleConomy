@@ -1,10 +1,12 @@
 package net.battlenexus.bukkit.economy;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.battlenexus.bukkit.economy.sql.MySQL;
+import net.battlenexus.bukkit.economy.sql.SqlClass;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,11 +17,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BattleConomy extends JavaPlugin {
 	FileConfiguration config;	
-	MySQL sql = new MySQL();
+	SqlClass sql;
 	boolean connected =  false;
+	public static BattleConomy INSTANCE;
 
 	@Override
-	public void onEnable() {		
+	public void onEnable() {	
+	    INSTANCE = this;
 		File config = new File(this.getDataFolder(), "config.yml");
 		if (!config.exists()) {
 		    saveDefaultConfig();
@@ -27,6 +31,27 @@ public class BattleConomy extends JavaPlugin {
 		    getServer().getPluginManager().disablePlugin(this);
 		}		
 		getConfig();
+		
+		
+		try {
+            setupSQL();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+		
+		
 		if (sql.connect(getConfig().getString("mysql.host"), getConfig().getString("mysql.port"), getConfig().getString("mysql.database"), getConfig().getString("mysql.username"), getConfig().getString("mysql.password"))){
 			connected = true;
 			sql.prefix = getConfig().getString("mysql.prefix");
@@ -61,6 +86,13 @@ public class BattleConomy extends JavaPlugin {
 		getCommand("be").setExecutor(new BattleCommands(sql));
 
 		getLogger().info("BattleConomy loaded successfully");
+	}
+	
+	private void setupSQL() throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	    Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.sql."+ getConfig().getString("sql.driver", "MySQL"));
+        Class<? extends SqlClass> runClass = class_.asSubclass(SqlClass.class);
+        Constructor<? extends SqlClass> constructor = runClass.getConstructor();
+        sql = constructor.newInstance();
 	}
 
 	private void setupMysql() {
@@ -110,5 +142,6 @@ public class BattleConomy extends JavaPlugin {
 		}
 		Api.economies.clear();
 		getLogger().info("BattleConomy disabled successfully");
+		INSTANCE = null;
 	}
 }
