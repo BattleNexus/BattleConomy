@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MySQL extends SqlClass {
+public class Mysql extends SqlClass {
 
 	@Override
 	public boolean connect(String host, String port, String database, String username, String password) {

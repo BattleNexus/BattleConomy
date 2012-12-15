@@ -8,7 +8,7 @@ import net.battlenexus.bukkit.economy.BattleConomy;
 
 import lib.PatPeter.SQLibrary.SQLite;
 
-public class SQlite extends SqlClass {
+public class Sqlite extends SqlClass {
 
     private SQLite sql;
     @Override
