@@ -9,6 +9,7 @@ import java.util.List;
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 import net.milkbowl.vault.economy.Economy;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -41,16 +42,16 @@ public class BattleConomy extends JavaPlugin {
         }
 		
 		
-		if (sql.connect(getConfig().getString("mysql.host"), getConfig().getString("mysql.port"), getConfig().getString("mysql.database"), getConfig().getString("mysql.username"), getConfig().getString("mysql.password"))){
+		if (sql.connect(getConfig().getString("sql.host"), getConfig().getString("sql.port"), getConfig().getString("sql.database"), getConfig().getString("sql.username"), getConfig().getString("sql.password"))){
 			connected = true;
-			sql.prefix = getConfig().getString("mysql.prefix");
+			sql.prefix = getConfig().getString("sql.prefix");
 			Api.sql = sql;
-			if(getConfig().getBoolean("mysql.auto-create")){
+			if(getConfig().getBoolean("sql.auto-create")){
 				setupMysql();
-				getConfig().set("mysql.auto-create", false);
+				getConfig().set("sql.auto-create", false);
 			    saveConfig();
 			}
-			getLogger().info("Connected to mysql!");
+			getLogger().info("Connected to sql server!");
 		}else{
 			getLogger().info("Couldn't connect to mysql");
 			getLogger().info("Plugin not loaded");
@@ -78,7 +79,7 @@ public class BattleConomy extends JavaPlugin {
 	}
 	
 	private void setupSQL() throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-	    Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.sql."+ getConfig().getString("sql.driver", "MySQL"));
+	    Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.sql."+WordUtils.capitalizeFully(getConfig().getString("sql.driver", "Sqlite")));
         Class<? extends SqlClass> runClass = class_.asSubclass(SqlClass.class);
         Constructor<? extends SqlClass> constructor = runClass.getConstructor();
         sql = constructor.newInstance();
