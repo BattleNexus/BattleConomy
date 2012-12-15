@@ -11,10 +11,13 @@ import lib.PatPeter.SQLibrary.SQLite;
 public class Sqlite extends SqlClass {
 
     private SQLite sql;
+
     @Override
     public boolean connect(String host, String port, String database,
             String username, String password) {
-        sql = new SQLite(BattleConomy.INSTANCE.getLogger(), BattleConomy.INSTANCE.getName(), "battle", BattleConomy.INSTANCE.getDataFolder().getAbsolutePath());
+        sql = new SQLite(BattleConomy.INSTANCE.getLogger(),
+                BattleConomy.INSTANCE.getName(), "battle",
+                BattleConomy.INSTANCE.getDataFolder().getAbsolutePath());
         try {
             sql.open();
         } catch (Exception e) {
@@ -53,7 +56,7 @@ public class Sqlite extends SqlClass {
         try {
             preparedStatement = sql.prepare(command);
             int i = 1;
-            for(String parameter : parameters) {
+            for (String parameter : parameters) {
                 preparedStatement.setString(i, parameter);
                 i++;
             }
@@ -69,7 +72,7 @@ public class Sqlite extends SqlClass {
         PreparedStatement preparedStatement;
         int results = 0;
         try {
-            preparedStatement = sql.prepare(command);       
+            preparedStatement = sql.prepare(command);
             results = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

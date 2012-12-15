@@ -1,4 +1,5 @@
 package net.battlenexus.bukkit.economy.api;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -16,7 +17,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
-
 public class Vault_BattleConomy implements Economy {
     private static final Logger log = Logger.getLogger("Minecraft");
 
@@ -26,13 +26,16 @@ public class Vault_BattleConomy implements Economy {
 
     public Vault_BattleConomy(Plugin plugin) {
         this.plugin = plugin;
-        Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
+        Bukkit.getServer().getPluginManager()
+                .registerEvents(new EconomyServerListener(this), plugin);
 
         if (economy == null) {
-            Plugin ec = plugin.getServer().getPluginManager().getPlugin("BattleConomy");
+            Plugin ec = plugin.getServer().getPluginManager()
+                    .getPlugin("BattleConomy");
             if (ec != null && ec.isEnabled()) {
                 economy = (BattleConomy) ec;
-                log.info(String.format("[%s] Vault Support enabled.", plugin.getDescription().getName(), name));
+                log.info(String.format("[%s] Vault Support enabled.", plugin
+                        .getDescription().getName(), name));
             }
         }
     }
@@ -47,10 +50,12 @@ public class Vault_BattleConomy implements Economy {
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginEnable(PluginEnableEvent event) {
             if (economy.economy == null) {
-                Plugin ec = plugin.getServer().getPluginManager().getPlugin("BattleConomy");
+                Plugin ec = plugin.getServer().getPluginManager()
+                        .getPlugin("BattleConomy");
                 if (ec != null && ec.isEnabled()) {
                     economy.economy = (BattleConomy) ec;
-                    log.info(String.format("[%s] Vault Support enabled.", plugin.getDescription().getName(), economy.name));
+                    log.info(String.format("[%s] Vault Support enabled.",
+                            plugin.getDescription().getName(), economy.name));
                 }
             }
         }
@@ -58,9 +63,11 @@ public class Vault_BattleConomy implements Economy {
         @EventHandler(priority = EventPriority.MONITOR)
         public void onPluginDisable(PluginDisableEvent event) {
             if (economy.economy != null) {
-                if (event.getPlugin().getDescription().getName().equals("iConomy")) {
+                if (event.getPlugin().getDescription().getName()
+                        .equals("iConomy")) {
                     economy.economy = null;
-                    log.info(String.format("[%s][Economy] %s unhooked.", plugin.getDescription().getName(), economy.name));
+                    log.info(String.format("[%s][Economy] %s unhooked.", plugin
+                            .getDescription().getName(), economy.name));
                 }
             }
         }
@@ -107,29 +114,35 @@ public class Vault_BattleConomy implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (amount < 0) {
-            return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot withdraw negative funds");
+            return new EconomyResponse(0, 0, ResponseType.FAILURE,
+                    "Cannot withdraw negative funds");
         }
-        
-        if(!Api.accountExists(playerName)) {
-        	return new EconomyResponse(0, 0, ResponseType.FAILURE, "Account doesn't exist");
+
+        if (!Api.accountExists(playerName)) {
+            return new EconomyResponse(0, 0, ResponseType.FAILURE,
+                    "Account doesn't exist");
         }
 
         if (Api.hasEnough(playerName, amount)) {
             Api.takeMoney(playerName, amount);
-            return new EconomyResponse(amount, Api.getBalance(playerName), ResponseType.SUCCESS, null);
+            return new EconomyResponse(amount, Api.getBalance(playerName),
+                    ResponseType.SUCCESS, null);
         } else {
-            return new EconomyResponse(0, Api.getBalance(playerName), ResponseType.FAILURE, "Insufficient funds");
+            return new EconomyResponse(0, Api.getBalance(playerName),
+                    ResponseType.FAILURE, "Insufficient funds");
         }
     }
 
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         if (amount < 0) {
-            return new EconomyResponse(0, 0, ResponseType.FAILURE, "Cannot desposit negative funds");
+            return new EconomyResponse(0, 0, ResponseType.FAILURE,
+                    "Cannot desposit negative funds");
         }
 
         Api.addMoney(playerName, amount);
-        return new EconomyResponse(amount, Api.getBalance(playerName), ResponseType.SUCCESS, null);
+        return new EconomyResponse(amount, Api.getBalance(playerName),
+                ResponseType.SUCCESS, null);
     }
 
     @Override
@@ -139,42 +152,50 @@ public class Vault_BattleConomy implements Economy {
 
     @Override
     public EconomyResponse createBank(String name, String player) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse deleteBank(String name) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse bankHas(String name, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse bankWithdraw(String name, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse bankDeposit(String name, double amount) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse isBankOwner(String name, String playerName) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse isBankMember(String name, String playerName) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
     public EconomyResponse bankBalance(String name) {
-        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED, "BattleConomy does not support bank accounts!");
+        return new EconomyResponse(0.0D, 0.0D, ResponseType.NOT_IMPLEMENTED,
+                "BattleConomy does not support bank accounts!");
     }
 
     @Override
@@ -200,8 +221,8 @@ public class Vault_BattleConomy implements Economy {
         return Api.createAccount(playerName);
     }
 
-	@Override
-	public int fractionalDigits() {
-		return -1;
-	}
+    @Override
+    public int fractionalDigits() {
+        return -1;
+    }
 }

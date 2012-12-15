@@ -6,28 +6,31 @@ import org.bukkit.command.CommandSender;
 
 public class Add extends BNCommand {
 
-	@Override
-	public void execute(CommandSender sender, String[] args) {
-		if(!sender.hasPermission("be.admin.add") || !sender.isOp()){
-			sender.sendMessage("You do not have permission to run this command");
-			return;
-		}
-		if(args.length < 0) {
-			sender.sendMessage("/be add <username> <amount> [world]");
-		}
-		
-		if(!Api.accountExists(args[0])){
-			sender.sendMessage("The account '"+args[0]+"' doesn't exist");
-			return;
-		}
-		
-		
-		double amount = Double.parseDouble(args[1]);
+    @Override
+    public void execute(CommandSender sender, String[] args) {
+        if (!sender.hasPermission("be.admin.add") || !sender.isOp()) {
+            sender.sendMessage("You do not have permission to run this command");
+            return;
+        }
+        if (args.length < 0) {
+            sender.sendMessage("/be add <username> <amount> [world]");
+        }
 
-		if(args.length == 2 ? Api.addMoney(args[0], amount) : Api.addMoney(args[0], amount, Api.getEcononmyKeyByWorld(args[2]))) {				sender.sendMessage("You added "+Api.formatMoney(amount)+" to "+args[0]+"'s account. They now have "+Api.formatMoney(Api.getBalance(args[0])));
-		}else{
-			sender.sendMessage("This world doesn't have an economy");
-		}
-	}
+        if (!Api.accountExists(args[0])) {
+            sender.sendMessage("The account '" + args[0] + "' doesn't exist");
+            return;
+        }
+
+        double amount = Double.parseDouble(args[1]);
+
+        if (args.length == 2 ? Api.addMoney(args[0], amount) : Api.addMoney(
+                args[0], amount, Api.getEcononmyKeyByWorld(args[2]))) {
+            sender.sendMessage("You added " + Api.formatMoney(amount) + " to "
+                    + args[0] + "'s account. They now have "
+                    + Api.formatMoney(Api.getBalance(args[0])));
+        } else {
+            sender.sendMessage("This world doesn't have an economy");
+        }
+    }
 
 }

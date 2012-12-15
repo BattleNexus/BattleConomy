@@ -10,21 +10,23 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 public class BattleConomyListen implements Listener {
     public BattleConomyListen(BattleConomy plugin) {
-    	plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-	@EventHandler
+    @EventHandler
     public void playerLogin(PlayerLoginEvent event) {
-		Api.createAccount(event.getPlayer().getName());
-		String econKey = Api.getEcononmyKeyByWorld(event.getPlayer().getWorld().getName());
-		if(econKey != null)
-			Api.createBalance(event.getPlayer().getName(), econKey);	
-	}
-	
-	@EventHandler
-	public void playerWorldChange(PlayerChangedWorldEvent event) {
-		String econKey = Api.getEcononmyKeyByWorld(event.getPlayer().getWorld().getName());
-		if(econKey != null)
-			Api.createBalance(event.getPlayer().getName(), econKey);
-	}
+        Api.createAccount(event.getPlayer().getName());
+        String econKey = Api.getEcononmyKeyByWorld(event.getPlayer().getWorld()
+                .getName());
+        if (econKey != null)
+            Api.createBalance(event.getPlayer().getName(), econKey);
+    }
+
+    @EventHandler
+    public void playerWorldChange(PlayerChangedWorldEvent event) {
+        String econKey = Api.getEcononmyKeyByWorld(event.getPlayer().getWorld()
+                .getName());
+        if (econKey != null)
+            Api.createBalance(event.getPlayer().getName(), econKey);
+    }
 }
