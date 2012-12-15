@@ -6,6 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.battlenexus.bukkit.economy.api.Api;
+import net.battlenexus.bukkit.economy.api.Vault_BattleConomy;
+import net.battlenexus.bukkit.economy.listeners.BattleCommands;
+import net.battlenexus.bukkit.economy.listeners.BattleConomyListen;
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 import net.milkbowl.vault.economy.Economy;
 
@@ -117,7 +121,7 @@ public class BattleConomy extends JavaPlugin {
 			getServer().getServicesManager().unregister(economyProvider.getProvider());
 		}
 		
-		getServer().getServicesManager().register(Economy.class, new Economy_BattleConomy(this), this, ServicePriority.Highest);
+		getServer().getServicesManager().register(Economy.class, new Vault_BattleConomy(this), this, ServicePriority.Highest);
 	}
 
 	@Override

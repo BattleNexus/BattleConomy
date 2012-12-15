@@ -1,4 +1,7 @@
-package net.battlenexus.bukkit.economy;
+package net.battlenexus.bukkit.economy.listeners;
+
+import net.battlenexus.bukkit.economy.BattleConomy;
+import net.battlenexus.bukkit.economy.api.Api;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,8 +1,9 @@
-package net.battlenexus.bukkit.economy;
+package net.battlenexus.bukkit.economy.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import net.battlenexus.bukkit.economy.BattleConomy;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
@@ -16,14 +17,14 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 
 
-public class Economy_BattleConomy implements Economy {
+public class Vault_BattleConomy implements Economy {
     private static final Logger log = Logger.getLogger("Minecraft");
 
     private final String name = "BattleConomy";
     private Plugin plugin = null;
     protected BattleConomy economy = null;
 
-    public Economy_BattleConomy(Plugin plugin) {
+    public Vault_BattleConomy(Plugin plugin) {
         this.plugin = plugin;
         Bukkit.getServer().getPluginManager().registerEvents(new EconomyServerListener(this), plugin);
 
@@ -37,9 +38,9 @@ public class Economy_BattleConomy implements Economy {
     }
 
     public class EconomyServerListener implements Listener {
-        Economy_BattleConomy economy = null;
+        Vault_BattleConomy economy = null;
 
-        public EconomyServerListener(Economy_BattleConomy economy) {
+        public EconomyServerListener(Vault_BattleConomy economy) {
             this.economy = economy;
         }
 
