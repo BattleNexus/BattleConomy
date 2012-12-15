@@ -1,4 +1,4 @@
-package net.battlenexus.bukkit.economy;
+package net.battlenexus.bukkit.economy.api;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -3,7 +3,7 @@ package net.battlenexus.bukkit.economy.commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-import net.battlenexus.bukkit.economy.Api;
+import net.battlenexus.bukkit.economy.api.Api;
 
 public class Send extends BNCommand {
 

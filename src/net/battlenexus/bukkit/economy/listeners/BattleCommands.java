@@ -1,4 +1,4 @@
-package net.battlenexus.bukkit.economy;
+package net.battlenexus.bukkit.economy.listeners;
 
 import java.lang.reflect.Constructor;
 import java.sql.SQLException;

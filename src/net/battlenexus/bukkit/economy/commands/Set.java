@@ -1,6 +1,6 @@
 package net.battlenexus.bukkit.economy.commands;
 
-import net.battlenexus.bukkit.economy.Api;
+import net.battlenexus.bukkit.economy.api.Api;
 
 import org.bukkit.command.CommandSender;
 
