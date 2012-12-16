@@ -1,8 +1,9 @@
 package net.battlenexus.bukkit.economy.listeners;
 
 import java.lang.reflect.Constructor;
-import java.sql.SQLException;
 
+import net.battlenexus.bukkit.economy.BattleConomy;
+import net.battlenexus.bukkit.economy.api.Api;
 import net.battlenexus.bukkit.economy.commands.BNCommand;
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
@@ -34,6 +35,13 @@ public class BattleCommands implements CommandExecutor {
         }
 
         try {
+            if (sender instanceof Player) {
+                final Player p = (Player)sender;
+                if (Api.getEconomyKeyByWorld(p.getWorld().getName()) == null) {
+                    p.sendMessage("Economy is not enabled on this world!");
+                    return true;
+                }
+            }
             Class<?> class_ = Class
                     .forName("net.battlenexus.bukkit.economy.commands."
                             + WordUtils.capitalizeFully(args[0]));
@@ -48,14 +56,11 @@ public class BattleCommands implements CommandExecutor {
             else if (newargs.length == 1)
                 newargs[0] = args[1];
             command.sql = sql;
-            command.execute(sender, newargs);
+            try {
+                command.execute(sender, newargs);
+            } catch (Exception e) { sender.sendMessage("There was an error running the command."); e.printStackTrace(); }
         } catch (Exception e) {
-            if (e instanceof ClassNotFoundException)
-                sender.sendMessage("Command not found.");
-            else if (e instanceof SQLException) {
-            } else
-                sender.sendMessage("There was error an running command.");
-            e.printStackTrace();
+            sender.sendMessage("Command not found.");
         }
 
         return true;
