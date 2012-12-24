@@ -2,8 +2,6 @@ package net.battlenexus.bukkit.economy.listeners;
 
 import java.lang.reflect.Constructor;
 
-import net.battlenexus.bukkit.economy.BattleConomy;
-import net.battlenexus.bukkit.economy.api.Api;
 import net.battlenexus.bukkit.economy.commands.BNCommand;
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
@@ -16,9 +14,11 @@ import org.bukkit.entity.Player;
 public class BattleCommands implements CommandExecutor {
 
     SqlClass sql;
+    public static BattleCommands instance;
 
     public BattleCommands(SqlClass sql) {
-        this.sql = sql;
+        this.sql = sql;            
+        instance = this;
     }
 
     @Override
@@ -33,18 +33,16 @@ public class BattleCommands implements CommandExecutor {
             }
             return onCommand(sender, cmd, label, newargs);
         }
+        
+        if(label.equalsIgnoreCase("addmoney")) label = "add";
+        if(label.equalsIgnoreCase("takemoney")) label = "take";
+        if(label.equalsIgnoreCase("setmoney")) label = "set";
+        if(label.equalsIgnoreCase("balancetop")) label = "top";
 
-        try {
-            if (sender instanceof Player) {
-                final Player p = (Player)sender;
-                if (Api.getEconomyKeyByWorld(p.getWorld().getName()) == null) {
-                    p.sendMessage("Economy is not enabled on this world!");
-                    return true;
-                }
-            }
+        try {            
             Class<?> class_ = Class
                     .forName("net.battlenexus.bukkit.economy.commands."
-                            + WordUtils.capitalizeFully(args[0]));
+                            + WordUtils.capitalizeFully(cmd.getName().equalsIgnoreCase("bc") ? args[0] : label));
             Class<? extends BNCommand> runClass = class_
                     .asSubclass(BNCommand.class);
             Constructor<? extends BNCommand> constructor = runClass

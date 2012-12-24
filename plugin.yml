@@ -17,3 +17,34 @@ commands:
         - balance
       description: View your balance.
       usage: /<command> [economykey] [player]
+   bc send:
+      description: Sends some of your money to another player
+      usage: /<command> [economykey] [player]
+   bc help:
+      description: View help. What you are using now!
+      usage: /<command>
+   bc add:
+      aliases:
+        - addmoney
+      description: Adds a specified amount to a players balance.
+      usage: /<command> <player> <amount> [economykey]
+   bc take:
+      aliases:
+        - takemoney
+      description: Subtracts a specified amount to a players balance.
+      usage: /<command> <player> <amount> [economykey]
+   bc set:
+      aliases:
+        - setmoney
+      description: Sets a players balance to the specified amount.
+      usage: /<command> <player> <amount> [economykey]
+   bc economy:
+      aliases:
+        - economykey
+      description: Gets the current world economy key.
+      usage: /<command>
+   bc top:
+      aliases:
+        - balancetop
+      description: Displays the top 5 players in the economy.
+      usage: /<command>

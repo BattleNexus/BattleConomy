@@ -1,7 +1,9 @@
 package net.battlenexus.bukkit.economy.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import net.battlenexus.bukkit.economy.api.Api;
 
@@ -28,11 +30,16 @@ public class Send extends BNCommand {
         double amount = Double.parseDouble(args[1]);
 
         if (Api.hasEnough(sender.getName(), amount)) {
-            if (Api.accountExists(username)) {
-                Api.addMoney(username, amount);
+            if (Api.accountExists(username)) {                
+                Api.addMoney(username, amount, Api.getEconomyKeyByPlayerWorld(sender.getName()));
                 Api.takeMoney(sender.getName(), amount);
-                sender.sendMessage("You sent " + Api.formatMoney(amount)
+                String money = Api.formatMoney(amount);
+                sender.sendMessage("You sent " + money
                         + " to " + username);
+                Player reciever = Bukkit.getServer().getPlayer(username);
+                if(reciever != null) {
+                    reciever.sendMessage(sender.getName()+ " has sent you " + money);
+                }
             } else
                 sender.sendMessage("User '"
                         + username

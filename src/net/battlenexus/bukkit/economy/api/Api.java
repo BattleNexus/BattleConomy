@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -41,8 +42,8 @@ public class Api {
     }
 
     public static boolean balanceExists(String username, String econKey) {
-        sql.build("SELECT COUNT(id) AS num FROM " + sql.prefix
-                + "balances WHERE username=? AND economy_key=?");
+        sql.build("SELECT COUNT(user_id) AS num FROM " + sql.prefix
+                + "balances b INNER JOIN " + sql.prefix + "players WHERE username=? AND economy_key=?");
         String[] params = { username.toLowerCase(), econKey };
         ResultSet results = sql.executePreparedQuery(params);
 
@@ -190,12 +191,30 @@ public class Api {
             return true;
         return false;
     }
+    
+    public static LinkedHashMap<String, Double> topPlayers(String economyKey) {
+        sql.build("SELECT b.balance, p.username FROM " + sql.prefix
+                + "players p INNER JOIN " + sql.prefix + "balances b ON p.id=b.user_id WHERE economy_key=? ORDER BY b.balance DESC LIMIT 0,5");
+        String[] params = { economyKey };
+
+        ResultSet results = sql.executePreparedQuery(params);
+        LinkedHashMap<String, Double> players = new LinkedHashMap<String, Double>();
+        try {
+            while (results.next()) {
+                players.put(results.getString("username"), results.getDouble("balance"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return players;
+    }
 
     public static String formatMoney(Double amount) {
-        if (amount != 0.0) {
+        if (amount > 1.0) {
             return prefix + format.format(amount);
         } else {
-            return prefix + "0.00";
+            return prefix + "0"+format.format(amount);
         }
     }
 }
