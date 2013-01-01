@@ -1,4 +1,7 @@
+.externalToolBuilders
 .classpath
 .project
 .settings
 bin
+target
+libs

@@ -5,8 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 public abstract class SqlClass implements SqlInterface {
 
+    protected ComboPooledDataSource cpds = null;
+    
     protected Connection conn = null;
 
     public String prefix = "";

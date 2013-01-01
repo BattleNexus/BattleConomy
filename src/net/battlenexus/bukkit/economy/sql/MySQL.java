@@ -1,32 +1,38 @@
 package net.battlenexus.bukkit.economy.sql;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 public class Mysql extends SqlClass {
 
     @Override
-    public boolean connect(String host, String port, String database,
-            String username, String password) {
+    public boolean connect(String host, String port, String database, String username, String password) {
         try {
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
-                    + port + "/" + database, username, password);
-        } catch (SQLException ex) {
-            return false;
+            cpds = new ComboPooledDataSource();
+            cpds.setDriverClass("com.mysql.jdbc.Driver");
+            cpds.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
+            cpds.setUser(username);
+            cpds.setPassword(password);
+            conn = cpds.getConnection();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        
+        
+        
+        /*DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
+                + port + "/" + database, username, password);*/
         return true;
     }
 
     @Override
     public void disconnect() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            // If it had problems, it was already disconnected
-        }
+        cpds.close();
     }
 
     @Override
@@ -43,6 +49,14 @@ public class Mysql extends SqlClass {
             results = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if(conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
         return results;
     }
