@@ -5,7 +5,7 @@ sql:
   database: database
   username: username
   password: password
-  prefix: econ_
+  prefix: battle_
   auto-create: true
 currency:
   prefix: $
