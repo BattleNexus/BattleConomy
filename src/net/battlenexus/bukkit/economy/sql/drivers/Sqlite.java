@@ -1,10 +1,11 @@
-package net.battlenexus.bukkit.economy.sql;
+package net.battlenexus.bukkit.economy.sql.drivers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import net.battlenexus.bukkit.economy.BattleConomy;
+import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 import lib.PatPeter.SQLibrary.SQLite;
 

@@ -1,9 +1,11 @@
-package net.battlenexus.bukkit.economy.sql;
+package net.battlenexus.bukkit.economy.sql.drivers;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
