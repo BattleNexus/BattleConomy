@@ -31,11 +31,6 @@
 		<version>1.4.5-R0.3-SNAPSHOT</version>
 	</dependency>
   	<dependency>
-  		<groupId>com.mchange</groupId>
-  		<artifactId>c3p0</artifactId>
-  		<version>0.9.2-pre6</version>
-  	</dependency>
-  	<dependency>
   		<groupId>com.mysql</groupId>
   		<artifactId>management</artifactId>
   		<version>5-0-2-beta</version>

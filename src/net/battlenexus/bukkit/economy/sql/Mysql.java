@@ -1,5 +1,6 @@
 package net.battlenexus.bukkit.economy.sql;
 
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,22 +12,12 @@ public class Mysql extends SqlClass {
     @Override
     public boolean connect(String host, String port, String database, String username, String password) {
         try {
-            cpds = new ComboPooledDataSource();
-            cpds.setDriverClass("com.mysql.jdbc.Driver");
-            cpds.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
-            cpds.setUser(username);
-            cpds.setPassword(password);
-            conn = cpds.getConnection();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
+                    + port + "/" + database, username, password);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
-        
-        /*DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
-                + port + "/" + database, username, password);*/
         return true;
     }
 
