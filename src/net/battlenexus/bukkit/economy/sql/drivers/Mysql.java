@@ -23,7 +23,11 @@ public class Mysql extends SqlClass {
 
     @Override
     public void disconnect() {
-        cpds.close();
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            //Lets just assume it's already disconnected 
+        }
     }
 
     @Override
