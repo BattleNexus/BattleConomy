@@ -7,8 +7,6 @@ import java.sql.SQLException;
 
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
 public class Mysql extends SqlClass {
 
     @Override
