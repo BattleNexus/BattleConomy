@@ -97,7 +97,7 @@ public class BattleConomy extends JavaPlugin {
             NoSuchMethodException, SecurityException, InstantiationException,
             IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
-        Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.sql."
+        Class<?> class_ = Class.forName("net.battlenexus.bukkit.economy.sql.driver."
                 + WordUtils.capitalizeFully(getConfig().getString("sql.driver",
                         "Sqlite")));
         Class<? extends SqlClass> runClass = class_.asSubclass(SqlClass.class);
