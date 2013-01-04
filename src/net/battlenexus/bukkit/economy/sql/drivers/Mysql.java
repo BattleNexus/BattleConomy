@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
@@ -15,10 +16,20 @@ public class Mysql extends SqlClass {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
                     + port + "/" + database, username, password);
+            dbhost = host;
+            dbport = port;
+            dbname = database;
+            dbuser = username;
+            dbpass = password;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
+    }
+    
+    public boolean reconnect() {
+        return connect(dbhost, dbport, dbname, dbuser, dbpass);
     }
 
     @Override
@@ -34,17 +45,27 @@ public class Mysql extends SqlClass {
     public ResultSet executeRawPreparedQuery(String sql, String[] parameters) {
         PreparedStatement preparedStatement;
         ResultSet results = null;
-        try {
-            preparedStatement = conn.prepareStatement(sql);
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i, parameter);
-                i++;
+        int r = 0;
+        do{ 
+            try {
+                preparedStatement = conn.prepareStatement(sql);
+                int i = 1;
+                for (String parameter : parameters) {
+                    preparedStatement.setString(i, parameter);
+                    i++;
+                }
+                results = preparedStatement.executeQuery();
+                break;
+            } catch (SQLException e) {
+                if(r < retries){
+                    reconnect();
+                }else{
+                    System.out.print("ERROR");
+                    break;
+                }
+                e.printStackTrace();
             }
-            results = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }while (true);
         
         return results;
     }

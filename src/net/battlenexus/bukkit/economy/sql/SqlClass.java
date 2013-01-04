@@ -18,7 +18,13 @@ public abstract class SqlClass implements SqlInterface {
     public PreparedStatement prepare;
 
     public ResultSet results;
-
+    
+    protected String dbhost;
+    protected String dbport;
+    protected String dbname;
+    protected String dbuser;
+    protected String dbpass;
+    
     public void build(String sql) {
         current_query += sql;
     }
