@@ -8,6 +8,8 @@ import java.sql.SQLException;
 public abstract class SqlClass implements SqlInterface {
     
     protected Connection conn = null;
+    
+    public int retries = 3;
 
     public String prefix = "";
 

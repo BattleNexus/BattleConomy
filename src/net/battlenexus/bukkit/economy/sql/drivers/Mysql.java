@@ -44,15 +44,8 @@ public class Mysql extends SqlClass {
             results = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if(conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
+        
         return results;
     }
 
