@@ -74,17 +74,27 @@ public class Mysql extends SqlClass {
     public int executeRawPreparedUpdate(String sql, String[] parameters) {
         PreparedStatement preparedStatement;
         int results = 0;
-        try {
-            preparedStatement = conn.prepareStatement(sql);
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i, parameter);
-                i++;
+        int r = 0;
+        do{
+            try {
+                preparedStatement = conn.prepareStatement(sql);
+                int i = 1;
+                for (String parameter : parameters) {
+                    preparedStatement.setString(i, parameter);
+                    i++;
+                }
+                results = preparedStatement.executeUpdate();
+                break;
+            } catch (SQLException e) {
+                if(r < retries){
+                    reconnect();
+                }else{
+                    System.out.print("ERROR");
+                    break;
+                }
+                e.printStackTrace();
             }
-            results = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }while(true);
         return results;
     }
 
@@ -92,12 +102,22 @@ public class Mysql extends SqlClass {
     public ResultSet executeRawQuery(String sql) {
         PreparedStatement preparedStatement;
         ResultSet results = null;
-        try {
-            preparedStatement = conn.prepareStatement(sql);
-            results = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        int r = 0;
+        do{
+            try {
+                preparedStatement = conn.prepareStatement(sql);
+                results = preparedStatement.executeQuery();
+                break;
+            } catch (SQLException e) {
+                if(r < retries){
+                    reconnect();
+                }else{
+                    System.out.print("ERROR");
+                    break;
+                }
+                e.printStackTrace();
+            }
+        }while(true);
         return results;
     }
 
@@ -105,12 +125,21 @@ public class Mysql extends SqlClass {
     public int executeRawUpdate(String sql) {
         PreparedStatement preparedStatement;
         int results = 0;
-        try {
-            preparedStatement = conn.prepareStatement(sql);
-            results = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        int r = 0;
+        do {
+            try {
+                preparedStatement = conn.prepareStatement(sql);
+                results = preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                if(r < retries){
+                    reconnect();
+                }else{
+                    System.out.print("ERROR");
+                    break;
+                }
+                e.printStackTrace();
+            }
+        } while(true);
         return results;
     }
 }
