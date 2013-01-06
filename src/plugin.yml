@@ -5,6 +5,7 @@ version: 1.0.0-beta1
 author: Lavoaster
 softdepend: [Vault]
 loadbefore: [Essentials]
+database: true
 commands:
    bc:
       aliases:
