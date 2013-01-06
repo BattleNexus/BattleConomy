@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 public class Mysql extends SqlClass {
@@ -56,13 +58,14 @@ public class Mysql extends SqlClass {
                 }
                 results = preparedStatement.executeQuery();
                 break;
-            } catch (SQLException e) {
+            } catch (CommunicationsException e) {
                 if(r < retries){
                     reconnect();
                 }else{
                     System.out.print("ERROR");
                     break;
                 }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }while (true);
@@ -85,13 +88,14 @@ public class Mysql extends SqlClass {
                 }
                 results = preparedStatement.executeUpdate();
                 break;
-            } catch (SQLException e) {
+            } catch (CommunicationsException e) {
                 if(r < retries){
                     reconnect();
                 }else{
                     System.out.print("ERROR");
                     break;
                 }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }while(true);
@@ -108,13 +112,14 @@ public class Mysql extends SqlClass {
                 preparedStatement = conn.prepareStatement(sql);
                 results = preparedStatement.executeQuery();
                 break;
-            } catch (SQLException e) {
+            } catch (CommunicationsException e) {
                 if(r < retries){
                     reconnect();
                 }else{
                     System.out.print("ERROR");
                     break;
                 }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }while(true);
@@ -130,15 +135,17 @@ public class Mysql extends SqlClass {
             try {
                 preparedStatement = conn.prepareStatement(sql);
                 results = preparedStatement.executeUpdate();
-            } catch (SQLException e) {
+            } catch (CommunicationsException e) {
                 if(r < retries){
                     reconnect();
                 }else{
                     System.out.print("ERROR");
                     break;
                 }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
+            
         } while(true);
         return results;
     }
