@@ -43,7 +43,7 @@ public class Api {
     }
     
     public static void setupEconomies() {
-        sql.build("SELECT * FROM " + sql.prefix + "economies'");
+        sql.build("SELECT * FROM " + sql.prefix + "economies");
         ResultSet results = sql.executeQuery();
         try {
             while (results.next()) {
