@@ -121,7 +121,7 @@ public class BattleConomy extends JavaPlugin {
                 + ") ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
         sql.executeUpdate();
         getLogger().info("Created Table: "+sql.prefix+"players");
-        sql.build("CREATE TABLE IF NOT EXISTS " + sql.prefix + "econ_economies ("
+        sql.build("CREATE TABLE IF NOT EXISTS " + sql.prefix + "economies ("
                 + "  econ_key varchar(255) NOT NULL,"
                 + "  econ_name varchar(255) NOT NULL,"
                 + "  econ_worlds text NOT NULL,"
