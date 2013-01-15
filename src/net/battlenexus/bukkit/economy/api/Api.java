@@ -3,6 +3,7 @@ package net.battlenexus.bukkit.economy.api;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,6 +40,22 @@ public class Api {
         }
 
         return false;
+    }
+    
+    public static void setupEconomies() {
+        sql.build("SELECT * FROM " + sql.prefix + "economies'");
+        ResultSet results = sql.executeQuery();
+        try {
+            while (results.next()) {
+                List<String> worlds = new ArrayList<String>();
+                for (String world : results.getString("econ_worlds").split(",")) {
+                    worlds.add(world);
+                }
+                Api.economies.put(results.getString("econ_key"), worlds);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }        
     }
 
     public static boolean balanceExists(String username, String econKey) {

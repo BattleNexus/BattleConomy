@@ -11,10 +11,3 @@ currency:
   prefix: $
   singular: Dollar
   plural: Dollars
-economies:
-  main:
-    starting-balance: 0
-    worlds:
-    - world
-    - world_nether
-    - world_the_end

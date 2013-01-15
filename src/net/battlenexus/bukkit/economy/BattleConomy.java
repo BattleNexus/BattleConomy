@@ -3,8 +3,6 @@ package net.battlenexus.bukkit.economy;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.battlenexus.bukkit.economy.api.Api;
 import net.battlenexus.bukkit.economy.api.Vault_BattleConomy;
@@ -44,7 +42,7 @@ public class BattleConomy extends JavaPlugin {
             e.printStackTrace();
             getServer().getPluginManager().disablePlugin(this);
         }
-
+        getLogger().info("Connecting to mysql...");
         if (sql.connect(getConfig().getString("sql.host"), getConfig()
                 .getString("sql.port"), getConfig().getString("sql.database"),
                 getConfig().getString("sql.username"),
@@ -64,20 +62,21 @@ public class BattleConomy extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        getLogger().info("Connecting to mysql...Done?");
         Api.config = getConfig();
         Api.prefix = getConfig().getString("currency.prefix");
         Api.singular = getConfig().getString("currency.singular");
         Api.plural = getConfig().getString("currency.plural");
+        Api.setupEconomies();
 
-        for (String econKey : getConfig().getConfigurationSection("economies")
-                .getKeys(false)) {
+        /*for (String econKey : getConfig().getConfigurationSection("economies").getKeys(false)) {
             List<String> worlds = new ArrayList<String>();
             for (String world : getConfig().getStringList(
                     "economies." + econKey + ".worlds")) {
                 worlds.add(world);
             }
             Api.economies.put(econKey, worlds);
-        }
+        }*/
 
         setupVault();
         new BattleConomyListen(this);
@@ -114,12 +113,23 @@ public class BattleConomy extends JavaPlugin {
                 + "  PRIMARY KEY (economy_key,user_id)"
                 + ") ENGINE=MyISAM DEFAULT CHARSET=latin1;");
         sql.executeUpdate();
+        getLogger().info("Created Table: "+sql.prefix+"balances");
         sql.build("CREATE TABLE IF NOT EXISTS " + sql.prefix + "players ("
                 + "  id int(11) NOT NULL AUTO_INCREMENT,"
                 + "  username varchar(20) NOT NULL," + "  PRIMARY KEY (id),"
                 + "  UNIQUE KEY username (username)"
                 + ") ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
         sql.executeUpdate();
+        getLogger().info("Created Table: "+sql.prefix+"players");
+        sql.build("CREATE TABLE IF NOT EXISTS " + sql.prefix + "econ_economies ("
+                + "  econ_key varchar(255) NOT NULL,"
+                + "  econ_name varchar(255) NOT NULL,"
+                + "  econ_worlds text NOT NULL,"
+                + "  econ_starting_balance decimal(19,2) NOT NULL DEFAULT '0.00',"
+                + "  PRIMARY KEY (econ_key)"
+                + ") ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+        sql.executeUpdate();
+        getLogger().info("Created Table: "+sql.prefix+"economies");
         getLogger().info("Mysql tables created successfully...");
     }
 
