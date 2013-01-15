@@ -48,6 +48,7 @@ public class BattleConomy extends JavaPlugin {
                 getConfig().getString("sql.username"),
                 getConfig().getString("sql.password"))) {
             connected = true;
+            getLogger().info("Connected to sql server!");
             sql.prefix = getConfig().getString("sql.prefix");
             Api.sql = sql;
             if (getConfig().getBoolean("sql.auto-create")) {
@@ -55,7 +56,6 @@ public class BattleConomy extends JavaPlugin {
                 getConfig().set("sql.auto-create", false);
                 saveConfig();
             }
-            getLogger().info("Connected to sql server!");
         } else {
             getLogger().info("Couldn't connect to mysql");
             getLogger().info("Plugin not loaded");
