@@ -1,7 +1,7 @@
 name: BattleConomy
 load: startup
 main: net.battlenexus.bukkit.economy.BattleConomy
-version: 1.0.0-beta1
+version: 1.0.0-beta2
 author: Lavoaster
 softdepend: [Vault]
 loadbefore: [Essentials]
