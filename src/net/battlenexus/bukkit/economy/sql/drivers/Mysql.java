@@ -4,7 +4,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
@@ -67,6 +66,7 @@ public class Mysql extends SqlClass {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                break;
             }
         }while (true);
         
@@ -97,6 +97,7 @@ public class Mysql extends SqlClass {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                break;
             }
         }while(true);
         return results;
@@ -121,6 +122,7 @@ public class Mysql extends SqlClass {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                break;
             }
         }while(true);
         return results;
@@ -135,6 +137,7 @@ public class Mysql extends SqlClass {
             try {
                 preparedStatement = conn.prepareStatement(sql);
                 results = preparedStatement.executeUpdate();
+                break;
             } catch (CommunicationsException e) {
                 if(r < retries){
                     reconnect();
@@ -144,6 +147,7 @@ public class Mysql extends SqlClass {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                break;
             }
             
         } while(true);
