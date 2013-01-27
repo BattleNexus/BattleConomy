@@ -27,6 +27,7 @@ public class Iconomy extends ConverterClass {
                 Api.createBalance(miniDb[0], Double.parseDouble(miniDb[1]), "main");
             }
         }catch(Exception e){
+            e.printStackTrace();
             System.out.println("ABANDON SHIP, EVERYTHING HAS GONE TO CRAP");
         }
         
