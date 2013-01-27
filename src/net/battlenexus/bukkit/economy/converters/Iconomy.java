@@ -26,8 +26,8 @@ public class Iconomy extends ConverterClass {
                 String[] miniDb = line.split(" ");
                 
                 Api.sql.build("INSERT IGNORE INTO " + Api.sql.prefix + "players SET username="+miniDb[0]+";"+"INSERT IGNORE INTO " + Api.sql.prefix
-                        + "balances SELECT "+miniDb[0]+",id,"+Double.parseDouble(miniDb[1].replace("balance:", ""))+" FROM " + Api.sql.prefix
-                        + "players WHERE username="+miniDb[0]+";");
+                        + "balances SELECT '"+miniDb[0]+"',id,'"+Double.parseDouble(miniDb[1].replace("balance:", ""))+"' FROM " + Api.sql.prefix
+                        + "players WHERE username='"+miniDb[0]+"';");
                 i++;
                 if(i > 499){
                     Api.sql.executeUpdate();
