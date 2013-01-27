@@ -100,15 +100,17 @@ public class Api {
     }
 
     public static boolean createBalance(String username, String econKey) {
+        return createBalance(username, config.getDouble("economies." + econKey + ".starting-balance"), econKey);
+    }
+    
+    public static boolean createBalance(String username, double money, String econKey) {
         sql.build("INSERT IGNORE INTO " + sql.prefix
                 + "balances SELECT ?,id,? FROM " + sql.prefix
                 + "players WHERE username=?");
-        String[] params = { econKey.toLowerCase(),
-                config.getString("economies." + econKey + ".starting-balance"),
-                username.toLowerCase() };
+        String[] params = { econKey.toLowerCase(), Double.toString(money), username.toLowerCase() };
         if (sql.executePreparedUpdate(params) > 0)
             return true;
-        return false;
+        return false;        
     }
 
     public static double getBalance(String username) {
