@@ -20,16 +20,27 @@ public class Iconomy extends ConverterClass {
             
             String line = null;
             
+            int i = 0;
+            
             while((line = file.readLine()) != null) {
                 String[] miniDb = line.split(" ");
                 
-                Api.createAccount(miniDb[0]);
-                Api.createBalance(miniDb[0], Double.parseDouble(miniDb[1].replace("balance:", "")), "main");
+                Api.sql.build("INSERT IGNORE INTO " + Api.sql.prefix
+                        + "balances SELECT "+miniDb[0]+",id,"+Double.parseDouble(miniDb[1].replace("balance:", ""))+" FROM " + Api.sql.prefix
+                        + "players WHERE username="+miniDb[0]+";");
+                i++;
+                if(i > 499){
+                    Api.sql.executeUpdate();
+                    i = 0;
+                }
             }
+            file.close();
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("ABANDON SHIP, EVERYTHING HAS GONE TO CRAP");
+            return false;
         }
+        Api.sql.executeUpdate();
         
         return true;
     }
