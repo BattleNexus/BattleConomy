@@ -11,6 +11,9 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import net.battlenexus.bukkit.economy.BattleConomy;
+import net.battlenexus.bukkit.economy.api.events.PlayerBalanceUpdateEvent;
+import net.battlenexus.bukkit.economy.api.events.PlayerBalanceUpdatedEvent;
 import net.battlenexus.bukkit.economy.sql.SqlClass;
 
 public class Api {
@@ -157,18 +160,7 @@ public class Api {
 
     public static boolean addMoney(String username, double amount,
             String econKey) {
-        if (econKey == null)
-            return false;
-        sql.build("UPDATE "
-                + sql.prefix
-                + "balances b INNER JOIN "
-                + sql.prefix
-                + "players p ON p.id=b.user_id SET b.balance=b.balance+? WHERE p.username=? AND b.economy_key=?");
-        String[] params = { Double.toString(amount), username.toLowerCase(),
-                econKey };
-        if (sql.executePreparedUpdate(params) > 0)
-            return true;
-        return false;
+        return setMoney(username, getBalance(username) + amount, econKey);
     }
 
     public static boolean takeMoney(String username, double amount) {
@@ -177,18 +169,7 @@ public class Api {
 
     public static boolean takeMoney(String username, double amount,
             String econKey) {
-        if (econKey == null)
-            return false;
-        sql.build("UPDATE "
-                + sql.prefix
-                + "balances b INNER JOIN "
-                + sql.prefix
-                + "players p ON p.id=b.user_id SET b.balance=b.balance-? WHERE p.username=? AND b.economy_key=?");
-        String[] params = { Double.toString(amount), username.toLowerCase(),
-                econKey };
-        if (sql.executePreparedUpdate(params) > 0)
-            return true;
-        return false;
+        return setMoney(username, getBalance(username) - amount, econKey);
     }
 
     public static boolean setMoney(String username, double amount) {
@@ -199,6 +180,10 @@ public class Api {
             String econKey) {
         if (econKey == null)
             return false;
+        PlayerBalanceUpdateEvent event = new PlayerBalanceUpdateEvent(BattleConomy.INSTANCE, username);
+        BattleConomy.INSTANCE.getServer().getPluginManager().callEvent(event);
+        if (event.isCancelled())
+            return false;
         sql.build("UPDATE "
                 + sql.prefix
                 + "balances b INNER JOIN "
@@ -206,8 +191,11 @@ public class Api {
                 + "players p ON p.id=b.user_id SET b.balance=? WHERE p.username=? AND b.economy_key=?");
         String[] params = { Double.toString(amount), username.toLowerCase(),
                 econKey };
-        if (sql.executePreparedUpdate(params) > 0)
+        if (sql.executePreparedUpdate(params) > 0) {
+            PlayerBalanceUpdatedEvent event1 = new PlayerBalanceUpdatedEvent(BattleConomy.INSTANCE, username);
+            BattleConomy.INSTANCE.getServer().getPluginManager().callEvent(event1);
             return true;
+        }
         return false;
     }
     
