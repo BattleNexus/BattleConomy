@@ -16,12 +16,13 @@ public class Mysql extends SqlClass {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
-                    + port + "/" + database, username, password);
+                    + port + "/?allowMultiQueries=true" + database, username, password);
             dbhost = host;
             dbport = port;
             dbname = database;
             dbuser = username;
             dbpass = password;
+            conn.
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
