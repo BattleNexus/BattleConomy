@@ -16,7 +16,7 @@ public class Mysql extends SqlClass {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection("jdbc:mysql://" + host + ":"
-                    + port + "/?allowMultiQueries=true" + database, username, password);
+                    + port + "/" + database + "?allowMultiQueries=true", username, password);
             dbhost = host;
             dbport = port;
             dbname = database;
