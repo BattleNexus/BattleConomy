@@ -16,11 +16,10 @@ public class Convert extends BNCommand {
         
         ConverterClass converter = null;
         
-        switch(args[0]){
-        case "iconomy":
+        if(args[0].equalsIgnoreCase("iconomy")){
             converter = new Iconomy();
-            break;
         }
+        
         sender.sendMessage("Attempting Conversion of flatfile...");
         if(!converter.equals(null))
             converter.flatFile();
