@@ -22,7 +22,6 @@ public class Mysql extends SqlClass {
             dbname = database;
             dbuser = username;
             dbpass = password;
-            conn.
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
