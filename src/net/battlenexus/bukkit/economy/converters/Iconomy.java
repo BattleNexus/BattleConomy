@@ -24,7 +24,7 @@ public class Iconomy extends ConverterClass {
                 String[] miniDb = line.split(" ");
                 
                 Api.createAccount(miniDb[0]);
-                Api.createBalance(miniDb[0], Double.parseDouble(miniDb[1]), "main");
+                Api.createBalance(miniDb[0], Double.parseDouble(miniDb[1].replace("balance:", "")), "main");
             }
         }catch(Exception e){
             e.printStackTrace();
