@@ -10,7 +10,7 @@ public class Balance extends BNCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && args.length < 1) {
-            sender.sendMessage("This command can only be run by players");
+            sender.sendMessage("This command can only be run by players ");
             return;
         }
 
