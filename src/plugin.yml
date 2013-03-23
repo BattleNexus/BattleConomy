@@ -7,43 +7,52 @@ softdepend: [Vault]
 loadbefore: [Essentials]
 commands:
    bc:
+      permission: battleconomy.use
       aliases:
         - money
         - m
       description: BattleEconomy Command.
       usage: /<command> [option] [arguments]
    bc balance:
+      permission: battleconomy.balance
       aliases:
         - balance
       description: View your balance.
       usage: /<command> [economykey] [player]
    bc send:
+      permission: battleconomy.send
       description: Sends some of your money to another player
       usage: /<command> [economykey] [player]
    bc help:
+      permission: battleconomy.help
       description: View help. What you are using now!
       usage: /<command>
    bc add:
+      permission: battleconomy.admin
       aliases:
         - addmoney
       description: Adds a specified amount to a players balance.
       usage: /<command> <player> <amount> [economykey]
    bc take:
+      permission: battleconomy.admin
       aliases:
         - takemoney
       description: Subtracts a specified amount to a players balance.
       usage: /<command> <player> <amount> [economykey]
    bc set:
+      permission: battleconomy.admin
       aliases:
         - setmoney
       description: Sets a players balance to the specified amount.
       usage: /<command> <player> <amount> [economykey]
    bc economy:
+      permission: battleconomy.econ
       aliases:
         - economykey
       description: Gets the current world economy key.
       usage: /<command>
    bc top:
+      permission: battleconomy.top
       aliases:
         - balancetop
       description: Displays the top 5 players in the economy.
