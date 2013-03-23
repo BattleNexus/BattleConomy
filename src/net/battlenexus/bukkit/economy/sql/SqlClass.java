@@ -52,6 +52,10 @@ public abstract class SqlClass implements SqlInterface {
         current_query = "";
         return query;
     }
+    
+    public Connection getConnection() {
+        return null;
+    }
 
     public boolean isConnected() {
         try {

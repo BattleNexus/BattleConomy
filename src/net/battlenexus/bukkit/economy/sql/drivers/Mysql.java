@@ -142,6 +142,7 @@ public class Mysql extends SqlClass {
                 if(r < retries){
                     reconnect();
                 }else{
+                    //TODO Improve these messages.
                     System.out.print("ERROR");
                     break;
                 }

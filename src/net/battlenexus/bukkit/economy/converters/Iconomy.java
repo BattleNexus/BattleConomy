@@ -25,6 +25,7 @@ public class Iconomy extends ConverterClass {
             while((line = file.readLine()) != null) {
                 String[] miniDb = line.split(" ");
                 
+                //Going to need to improve the SQL Package to support multiquery parameterisation
                 Api.sql.build("INSERT IGNORE INTO " + Api.sql.prefix + "players SET username='"+miniDb[0]+"';"+"INSERT IGNORE INTO " + Api.sql.prefix
                         + "balances SELECT '"+miniDb[0]+"',id,'"+Double.parseDouble(miniDb[1].replace("balance:", ""))+"' FROM " + Api.sql.prefix
                         + "players WHERE username='"+miniDb[0]+"';");
