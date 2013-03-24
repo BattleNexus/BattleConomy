@@ -5,6 +5,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import yt.codebukkit.scoreboardapi.Scoreboard;
+
+import net.battlenexus.bukkit.economy.BattleConomy;
 import net.battlenexus.bukkit.economy.api.Api;
 
 public class Send extends BNCommand {
@@ -38,8 +41,15 @@ public class Send extends BNCommand {
                         + " to " + username);
                 Player reciever = Bukkit.getServer().getPlayer(username);
                 if(reciever != null) {
+                    Scoreboard board = BattleConomy.scoreboard.createScoreboard("notify"+reciever.getName(), 2);
+                    board.setType(Scoreboard.Type.SIDEBAR);
+                    board.setScoreboardName("Notification");
+                    board.setItem(sender.getName()+" has sent you " + money, (Integer) null);
+                    board.showToPlayer(reciever, true);
+                    
                     reciever.sendMessage(sender.getName()+ " has sent you " + money);
                 }
+                
             } else
                 sender.sendMessage("User '"
                         + username

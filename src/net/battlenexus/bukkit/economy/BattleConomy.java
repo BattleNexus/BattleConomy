@@ -18,15 +18,19 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import yt.codebukkit.scoreboardapi.ScoreboardAPI;
+
 public class BattleConomy extends JavaPlugin {
     FileConfiguration config;
     SqlClass sql;
     boolean connected = false;
     public static BattleConomy INSTANCE;
+    public static ScoreboardAPI scoreboard;
 
     @Override
     public void onEnable() {
         INSTANCE = this;
+        scoreboard = ScoreboardAPI.getInstance();
         File config = new File(this.getDataFolder(), "config.yml");
         if (!config.exists()) {
             saveDefaultConfig();
@@ -87,7 +91,6 @@ public class BattleConomy extends JavaPlugin {
         getCommand("setmoney").setExecutor(BattleCommands.instance);
         getCommand("takemoney").setExecutor(BattleCommands.instance);
         getCommand("balancetop").setExecutor(BattleCommands.instance);
-
         
         getLogger().info("BattleConomy loaded successfully");
     }
