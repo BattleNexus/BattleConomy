@@ -39,15 +39,19 @@ public class Send extends BNCommand {
                 String money = Api.formatMoney(amount);
                 sender.sendMessage("You sent " + money
                         + " to " + username);
-                Player reciever = Bukkit.getServer().getPlayer(username);
+                final Player reciever = Bukkit.getServer().getPlayer(username);
                 if(reciever != null) {
-                    Scoreboard board = BattleConomy.scoreboard.createScoreboard("notify"+reciever.getName(), 2);
+                    final Scoreboard board = BattleConomy.scoreboard.createScoreboard("notify"+reciever.getName(), 2);
                     board.setType(Scoreboard.Type.SIDEBAR);
-                    board.setScoreboardName("Notification");
-                    board.setItem(sender.getName()+" has sent you " + money, (Integer) null);
+                    board.setScoreboardName("You've got money");
+                    board.setItem(sender.getName()+"+", Integer.parseInt(args[1]));
                     board.showToPlayer(reciever, true);
-                    
-                    reciever.sendMessage(sender.getName()+ " has sent you " + money);
+                    //reciever.sendMessage(sender.getName()+ " has sent you " + money);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(BattleConomy.INSTANCE, new Runnable() {
+                        public void run() {
+                            board.stopShowingAllPlayers();
+                        }
+                    }, 100);
                 }
                 
             } else
