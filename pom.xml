@@ -58,6 +58,13 @@
 		    </exclusion>
 		</exclusions>
   	</dependency>
+      <dependency>
+        <groupId>yt.codebukkit.scoreboardapi</groupId>
+        <artifactId>ScoreboardAPI</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/libs/ScoreboardAPI.jar</systemPath>
+    </dependency>
     <dependency>
 		<groupId>net.milkbowl</groupId>
 		<artifactId>Vault</artifactId>
