@@ -32,18 +32,31 @@
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/groups/public/</url>
     </repository>
+    <repository>
+      <id>vault-repo</id>
+      <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+    </repository>
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <layout>default</layout>
+      <url>http://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
 		<groupId>org.bukkit</groupId>
 		<artifactId>craftbukkit</artifactId>
-		<version>1.4.5-R0.3-SNAPSHOT</version>
+		<version>1.6.2-R1.0</version>
 	</dependency>
   	<dependency>
-  		<groupId>com.mysql</groupId>
-  		<artifactId>management</artifactId>
-  		<version>5-0-2-beta</version>
-  		<exclusions>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<version>5.1.26</version>
+<!--  		<exclusions>
 		    <exclusion>
 		        <groupId>com.sun.jmx</groupId>
 		        <artifactId>jmxri</artifactId>
@@ -56,21 +69,13 @@
 		            <groupId>javax.jms</groupId>
 		            <artifactId>jms</artifactId>
 		    </exclusion>
-		</exclusions>
+		</exclusions>-->
   	</dependency>
-      <dependency>
-        <groupId>yt.codebukkit.scoreboardapi</groupId>
-        <artifactId>ScoreboardAPI</artifactId>
-        <version>1.0.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/libs/ScoreboardAPI.jar</systemPath>
-    </dependency>
+
     <dependency>
-		<groupId>net.milkbowl</groupId>
+		<groupId>net.milkbowl.vault</groupId>
 		<artifactId>Vault</artifactId>
-		<version>1.2.20-SNAPSHOT</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/libs/Vault.jar</systemPath>
+		<version>1.2.27</version>
 	</dependency>
     <dependency>
         <groupId>lib.PatPeter</groupId>
